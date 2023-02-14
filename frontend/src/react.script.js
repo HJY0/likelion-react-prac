@@ -56,6 +56,13 @@ const virtualElement = h(
     {},
     h("li", null, "React 및 ReactDOM API 활용"),
     h("li", null, "가상(Virtual) 노드 vs. 실제(Actual) DOM 노드")
+  ),
+  h(
+    "button",
+    {
+      type: "button",
+    },
+    "unmount React App"
   )
 );
 
@@ -75,4 +82,17 @@ const actualElement = document.getElementById("root");
 // React가 만든 가상 노드를 렌더링 해줘
 const reactDomRoot = ReactDOM.createRoot(actualElement);
 
+// React가 하는 일 (pure)
 reactDomRoot.render(virtualElement);
+
+// 마운트 (React 가상 요소가 실제 DOM 요소 안에 렌더링 되었다)
+// 언마운트 (실제 DOM 요소 안에 렌더링 된 React 가상 요소가 제어되었다)
+// mount vs. unmount (마운트는 붙이기, 어마운트가 떼기)
+
+// React가 할 수 없는 일 (side effects)
+setTimeout(() => {
+  const button = document.querySelector("[type=button]");
+  button.addEventListener("click", () => {
+    reactDomRoot.unmount();
+  });
+}, 1000);
